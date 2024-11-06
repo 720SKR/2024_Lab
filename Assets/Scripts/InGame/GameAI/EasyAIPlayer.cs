@@ -35,12 +35,21 @@ public class EasyAIPlayer : MonoBehaviour
     {
         CurrentBoard = new int[4, 4];
         SelectedBoard = new int[16];
+        init();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void init()
+    {
+        playerColor = UIManager.SetM_P2();
+        Panel1.material = playerColor;
+        Panel2.material = playerColor;
+
     }
 
     public async void Turn()//試行しているという時間を演出するためUnitask使用。
@@ -71,8 +80,10 @@ public class EasyAIPlayer : MonoBehaviour
 
     void SearchEmpty()
     {
+        Debug.Log("Search");
         SelectedNUMBoard = 0;
         CurrentBoard = board.GetBoardValues();
+        Debug.Log("Length:"+CurrentBoard.Length);
         for(int i = 0; i < SelectedBoard.Length; i++)
         {
             SelectedBoard[i] = board.GetboardV(i);
@@ -104,8 +115,8 @@ public class EasyAIPlayer : MonoBehaviour
         {
             if (NumButton[i].activeSelf == true)
             {
-                SelectedNUM = i;
-                Debug.Log("Set"+SelectedNUM);
+                SelectedNUM = i + 1;
+                Debug.Log("Set"+SelectedNUM + 1);
                 CurrentText.text = (SelectedNUM + 1).ToString();
                 break;//最低値を初期選択にする。
             }
@@ -116,11 +127,13 @@ public class EasyAIPlayer : MonoBehaviour
     {
         GameObject.Find("SEManager").GetComponent<AudioSource>().PlayOneShot(SetSE);
         JustMass_Value[SelectedNUMBoard] = SelectedNUM;
-        JustMass_Text[SelectedNUMBoard].text = SelectedNUM.ToString();
+        JustMass_Text[SelectedNUMBoard].text = JustMass_Value[SelectedNUMBoard].ToString();
         JustMass_Image[SelectedNUMBoard].material = playerColor;
-        Debug.Log(SelectedNUM + "-1 :" + (SelectedNUM-1));
-        NumButton[SelectedNUM-1].SetActive(false);
+        Debug.Log("Value:"+JustMass_Value[SelectedNUMBoard]);
+    //    Debug.Log(SelectedNUM + "1 :" + (SelectedNUM+1));
+        NumButton[SelectedNUM].SetActive(false);
         board.SetValue(SelectedRow, SelectedColumn,SelectedNUM,SelectedNUMBoard);
         availableNumPlayer.Remove(SelectedNUM);
+        Debug.Log("Remove:" + SelectedNUM);
     }
 }

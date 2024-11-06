@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Material[] SetMaterial;//マテリアル一覧
     [SerializeField] static Material SendMaterial_p1;//ゲーム送信用マテリアル
     [SerializeField] static Material SendMaterial_p2;//player2版
-    public static bool isPlayer; //Playerかどうか
+    public static bool isAI; //Playerかどうか
 
     [SerializeField] Toggle[] PorC;//PlayerかCOMか
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class UIManager : MonoBehaviour
 
     void init()
     {
-        isPlayer = true;
+        isAI = false;
         i = playercolor1.value;
         playercolor2.value = i+1;
         Player1.material = SetMaterial[i];
@@ -58,12 +58,12 @@ public class UIManager : MonoBehaviour
 
     public void SetPlayer()//完全ローカル対戦
     {
-        isPlayer = true;
+        isAI = false;
     }
 
     public void SetCom()//個人対戦
     {
-        isPlayer = false;
+        isAI = true;
     }
 
     public static Material SetM_P1()
@@ -78,7 +78,7 @@ public class UIManager : MonoBehaviour
 
     public static bool GetisPlayer()
     {
-        return isPlayer;
+        return isAI;
     }
 
     public async void GoStartGame()

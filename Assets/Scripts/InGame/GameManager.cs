@@ -87,13 +87,13 @@ public class GameManager : MonoBehaviour
         ExitButton.SetActive(false);
         GameSetPanel.SetActive(false);
         isPlayer2 = UIManager.GetisPlayer();
-        if (!isPlayer2)
+        if (isPlayer2)
         {
             //コンピュータ用のPlayerスクリプトを起動
             Player2.GetComponent<Player_1>().enabled = false;
             AIPlayer.GetComponent<EasyAIPlayer>().enabled = true;
         }
-        if (isPlayer2)
+        if (!isPlayer2)
         {
             //Player用のスクリプトを起動する
             AIPlayer.GetComponent<EasyAIPlayer>().enabled = false;
@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
         if (Randv == 0)
         {
             playerNum = 0;//Player1が先行
-            if (isPlayer2)
+            if (!isPlayer2)
             {
                 Player2.GetComponent<Player_1>().NotTurn();
             }
@@ -127,7 +127,7 @@ public class GameManager : MonoBehaviour
             playerNum = 1;//Player2が先行
 
             Player1.GetComponent<Player>().NotTurn();
-            if (isPlayer2)
+            if (!isPlayer2)
             {
                 Player2.GetComponent<Player_1>().Turn();
             }
