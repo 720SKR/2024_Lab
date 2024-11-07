@@ -324,7 +324,7 @@ MonoBehaviour:
   - {fileID: 1717269076}
   - {fileID: 977660910}
   - {fileID: 1578834447}
-  waitTime: 3
+  waitTime: 1.5
   JustMass_Text:
   - {fileID: 500964081}
   - {fileID: 109160731}
@@ -5438,6 +5438,7 @@ MonoBehaviour:
   playerColor_1: {fileID: 0}
   count: 0
   isReload: 0
+  isAI: 0
   isSet: 0
   tg_v: 0
   pretg_v: 0
@@ -13798,6 +13799,7 @@ MonoBehaviour:
   PlayerList:
   - {fileID: 632407199}
   - {fileID: 7688680}
+  SetButton: {fileID: 142051107}
   RetryButton: {fileID: 1261842193}
   ExitButton: {fileID: 317074346}
   PlayerIcon1: {fileID: 1558821780}

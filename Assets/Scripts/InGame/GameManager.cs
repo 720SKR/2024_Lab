@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Cards1;
     [SerializeField] GameObject Cards2;
     [SerializeField] GameObject[] PlayerList;//2êlÇÃPlayeräiî[Ç∑ÇÈÇΩÇﬂÇÃîzóÒ
-
+    [SerializeField] GameObject SetButton;
     [SerializeField] GameObject RetryButton;
     [SerializeField] GameObject ExitButton;
     //[SerializeField] BGMManager bgm;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
             //bgm.GameSetBGM_AllStop();
             GameObject.Find("AudioManager").GetComponent<BGMManager>().GameSetBGM_AllStop();
             Player1.GetComponent<Player>().NotTurn();
-            if (!isPlayer2)
+            if (isPlayer2)
             {
                 AIPlayer.GetComponent<EasyAIPlayer>().enabled = false;
             }
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
             Cards2.SetActive(false);
             GameSetPanel.SetActive(true);
             GameUIM.GameUIMove();
-            
+            SetButton.SetActive(false);
             board.PrintCalculation();
             //board.printStatus();
             Game = true;
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
             //Debug.Log("Player1");
             TurnText.text = "Player 1 Turn";
         }
-        if (Player2.GetComponent<Player_1>().GetPlayerTurn())
+        if (Player2.GetComponent<Player_1>().GetPlayerTurn() || AIPlayer.GetComponent<EasyAIPlayer>().GetPlayerTurn())
         {
             //Debug.Log("Player2");
             TurnText.text = "Player 2 Turn";

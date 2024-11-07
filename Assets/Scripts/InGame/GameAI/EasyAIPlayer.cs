@@ -10,6 +10,7 @@ public class EasyAIPlayer : MonoBehaviour
     List<int> availableNumPlayer = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
     [SerializeField] GameObject[] NumButton;
     [SerializeField] float waitTime;
+    bool MyTurn;
     [Header("UI")]
     [SerializeField] Text[] JustMass_Text;
     [SerializeField] Image[] JustMass_Image;
@@ -47,13 +48,14 @@ public class EasyAIPlayer : MonoBehaviour
     public void init()
     {
         playerColor = UIManager.SetM_P2();
-        Panel1.material = playerColor;
-        Panel2.material = playerColor;
-
     }
 
     public async void Turn()//試行しているという時間を演出するためUnitask使用。
     {
+
+        MyTurn = true;
+        Panel1.material = playerColor;
+        Panel2.material = playerColor;
         Debug.Log("MyTurn");
         // どのように手を打つかを書く。今回は順々に空いているマスを探して適当に数字を置く。
         AvailableNumSearch();
@@ -76,6 +78,7 @@ public class EasyAIPlayer : MonoBehaviour
         board.EmptyCheck();
         cardsAnimation.BoolChangeTurnECP2();//カード仕舞いアニメーションのBool値の変更
         SendPlayer.GetComponent<Player>().Turn();
+        MyTurn = false;
     }
 
     void SearchEmpty()
@@ -116,8 +119,8 @@ public class EasyAIPlayer : MonoBehaviour
             if (NumButton[i].activeSelf == true)
             {
                 SelectedNUM = i + 1;
-                Debug.Log("Set"+SelectedNUM + 1);
-                CurrentText.text = (SelectedNUM + 1).ToString();
+                //Debug.Log("Set"+SelectedNUM + 1);
+                CurrentText.text = SelectedNUM.ToString();
                 break;//最低値を初期選択にする。
             }
         }
@@ -135,5 +138,10 @@ public class EasyAIPlayer : MonoBehaviour
         board.SetValue(SelectedRow, SelectedColumn,SelectedNUM,SelectedNUMBoard);
         availableNumPlayer.Remove(SelectedNUM);
         Debug.Log("Remove:" + SelectedNUM);
+    }
+
+    public bool GetPlayerTurn()
+    {
+        return MyTurn;
     }
 }

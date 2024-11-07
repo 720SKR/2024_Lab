@@ -100,6 +100,7 @@ public class BGMManager : MonoBehaviour
 
             Result.Stop();
             Title.Play();
+            IconSearch();
         }
         beforeScene = nextScene.name;
     }
@@ -123,6 +124,14 @@ public class BGMManager : MonoBehaviour
     {
         SetTestPlayIcon(BGMSelectNo);
         Title.Stop();
+    }
+
+    public void IconSearch()
+    {
+        TestPlayIcon[0] = GameObject.Find("Icon1").GetComponent<Image>();
+        TestPlayIcon[1] = GameObject.Find("Icon2").GetComponent<Image>();
+        TestPlayIcon[2] = GameObject.Find("Icon3").GetComponent<Image>();
+        TestPlayIcon[3] = GameObject.Find("Icon4").GetComponent<Image>();
     }
 
     public void TestPlayBGM(int No)
@@ -171,6 +180,7 @@ public class BGMManager : MonoBehaviour
 
     public void SetBGMVolume()
     {
+        GetAudioSource();
         BGMVolume = BGMVolumeChanger.GetSliderVolume();
         Title.volume = BGMVolume;
         GameBGM_1.volume = BGMVolume;
