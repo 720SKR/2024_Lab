@@ -64,7 +64,7 @@ public class State : MonoBehaviour
         this.visitCount = visitCount;
     }
 
-    double getWinScore()
+    public double getWinScore()
     {
         return winScore;
     }

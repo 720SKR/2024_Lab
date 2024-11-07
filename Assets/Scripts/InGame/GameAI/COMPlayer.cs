@@ -59,6 +59,17 @@ public class COMPlayer : MonoBehaviour
 
     }
     */
+    /*
+    private Node selectPromisingNode(Node rootNode)
+    {
+        Node node = rootNode;
+        while (node.getChildArray().Count != 0)
+        {
+            node  = 
+        }
+
+        return node;
+    }*/
 
     // Start is called before the first frame update
     void Start()
