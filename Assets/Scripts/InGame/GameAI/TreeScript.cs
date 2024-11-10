@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class TreeScript : MonoBehaviour
+public class TreeScript
 {
     Node root;
     public TreeScript()
@@ -27,6 +23,6 @@ public class TreeScript : MonoBehaviour
 
     public void addChild(Node parent,Node child)
     {
-//        parent.getChildArray().add(child);
+        parent.getChildArray().Add(child);
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class State : MonoBehaviour
+public class State
 {
     
     private BoardManager board;//Ç±ÇÃî’ñ éûÇÃÉ{Å[Éh
@@ -29,27 +29,27 @@ public class State : MonoBehaviour
         this.board = new BoardManager(board);
     }
 
-    BoardManager getBoard()
+    public BoardManager getBoard()
     {
         return board;
     }
 
-    void setBoard(BoardManager board)
+    public void setBoard(BoardManager board)
     {
         this.board = board;
     }
 
-    int getPlayerNo()
+    public int getPlayerNo()
     {
         return playerNo;
     }
 
-    void setPlayerNo(int playerNo)
+    public void setPlayerNo(int playerNo)
     {
         this.playerNo = playerNo;
     }
 
-    int getOpponent()
+    public int getOpponent()
     {
         return 3 - playerNo;
     }
@@ -69,7 +69,7 @@ public class State : MonoBehaviour
         return winScore;
     }
 
-    void setWinScore(double winScore)
+    public void setWinScore(double winScore)
     {
         this.winScore = winScore;
     }
@@ -88,18 +88,18 @@ public class State : MonoBehaviour
         return possibleStates;
     }
 
-    void incrementVisit()
+    public void incrementVisit()
     {
         this.visitCount++;
     }
 
-    void addScore(double score)
+    public void addScore(double score)
     {
         if (this.winScore != int.MinValue)
             this.winScore += score;
     }
 
-    void randomPlay()
+    public void randomPlay()
     {
         List<Position> availablePositions = this.board.getEmptyPositions();
         int totalPossibilities = availablePositions.Count;
@@ -107,7 +107,7 @@ public class State : MonoBehaviour
         this.board.performMove(this.playerNo, availablePositions[selectRandom]);
     }
 
-    void togglePlayer()
+    public void togglePlayer()
     {
         this.playerNo = 3 - this.playerNo;
     }

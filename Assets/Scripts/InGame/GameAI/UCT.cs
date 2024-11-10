@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
-public class UCT : MonoBehaviour
+public class UCT
 {
     public static double uctValue(int totalVisit,double nodeWinScore,int nodeVisit)
     {
@@ -12,15 +8,30 @@ public class UCT : MonoBehaviour
         {
             return int.MaxValue;
         }
-        return (nodeWinScore / (double)nodeVisit) + Math.Sqrt(3) * Math.Sqrt(Math.Log(totalVisit) / (double)nodeVisit);
+        return (nodeWinScore / (double)nodeVisit) + Math.Sqrt(2) * Math.Sqrt(Math.Log(totalVisit) / (double)nodeVisit);
     }
 
-    /*
-    static Node findBestNodeWithUCT(Node node)
+    
+    public static Node findBestNodeWithUCT(Node node)
     {
         int parentVisit = node.getState().getVisitCount();
-        return Enumerable.Max(.ToList() .node.getChildArray().
+        var ChildArray =  node.getChildArray();
+
+        Node MaxNode = ChildArray[0];
+        double maxUCT = uctValue(parentVisit,MaxNode.getState().getWinScore(),MaxNode.getState().getVisitCount());
+
+        foreach( var child in node.getChildArray() )
+        {
+            double UCT = uctValue(parentVisit, child.getState().getWinScore(), child.getState().getVisitCount());
+            if(maxUCT < UCT)
+            {
+                MaxNode = child;
+                maxUCT = UCT;
+            }
+        }
+        return MaxNode;
+        /*return Enumerable.Max(.ToList() .node.getChildArray().
             OrderByDescending(c => uctValue(parentVisit, c.getState().getWinScore(), c.getState().getVisitCount()))
-            .First());
-    }*/
+            .First());*/
+    }
 }

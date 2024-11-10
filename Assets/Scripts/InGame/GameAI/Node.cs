@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node
 {
     State state;
     Node parent;//親
@@ -76,21 +73,32 @@ public class Node : MonoBehaviour
     {
         this.childArray = childArray;
     }
-    /*
+    //子ノードからランダムに1人選択する
     public Node getRandomChildNode()
     {
-        int noOfPossibleMoves = this.childArray.size();
-        int selectRandom = (int)(Random. * noOfPossibleMoves);
+        int noOfPossibleMoves = childArray.Count;
+        int selectRandom = Random.Range(0, noOfPossibleMoves);
 
-        return this.childArray.get(selectRandom);
+        return childArray[selectRandom];
     }
-    */
-    /*
+    
+    //最多訪問数の子ノードを求める
     public Node getChildWithMaxScore()
     {
-        return  childArray.max(this.childArray, Comparator.comparing(c-> {
+        Node Max = childArray[0];
+        for(int i = 0; i<childArray.Count; i++)
+        {
+            if (childArray[i].getState().getVisitCount() > Max.getState().getVisitCount())
+            {
+                Max = childArray[i];
+            }
+        }
+        return Max;
+        /*
+        return  childArray.Max(this.childArray, Comparer.(c-> {
             return c.getState().getVisitCount();//最多訪問数。最高平均報酬を使う
         }));
+        */
     }
-    */
+    
 }
