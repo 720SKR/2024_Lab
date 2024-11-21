@@ -48,8 +48,10 @@ public class BoardManager : MonoBehaviour
     bool GameSet;
 
     int P1Count, P2Count, P1AbsCount, P2AbsCount;
-
+    int SelectX,SelectY;
     Material winner;
+    public DemoPlayer Player01;
+    public DemoPlayer Player02;
 
     public const int DEFAULT_BOARD_SIZE = 4;
 
@@ -88,9 +90,19 @@ public class BoardManager : MonoBehaviour
         return count;
     }
 
-    public BoardManager()
+    public BoardManager(DemoPlayer p1,DemoPlayer p2)
     {
         boardValues = new int[DEFAULT_BOARD_SIZE, DEFAULT_BOARD_SIZE];
+        for(int i = 0; i < DEFAULT_BOARD_SIZE; i++)
+        {
+            for(int j = 0; j< DEFAULT_BOARD_SIZE; j++)
+            {
+                boardValues[i, j] = 0;
+            }
+        }
+
+        Player01 = new DemoPlayer(p1);
+        Player02 = new DemoPlayer(p2);
     }
 
     public BoardManager(int boardsize)
@@ -98,9 +110,20 @@ public class BoardManager : MonoBehaviour
         boardValues = new int[boardsize, boardsize];
     }
 
-    public BoardManager(int[,] boardValues)
+    public BoardManager(int[,] boardValues,DemoPlayer p1,DemoPlayer p2)
     {
         this.boardValues = boardValues;
+        for (int i = 0; i < DEFAULT_BOARD_SIZE; i++)
+        {
+            for (int j = 0; j < DEFAULT_BOARD_SIZE; j++)
+            {
+                boardValues[i, j] = boardValues[i,j];
+            }
+        }
+        Player01 = new DemoPlayer(p1);
+        Player02 = new DemoPlayer(p2);
+
+
     }
 
     public BoardManager(BoardManager board)//指定したボードをコピーする
@@ -111,19 +134,38 @@ public class BoardManager : MonoBehaviour
         int n = boardValues.Length;
         for(int i = 0; i < n; i++)
         {
-            int m = boardValues.GetLength(i);
-            for(int j = 0; j<m; j++)
+            for(int j = 0; j<n; j++)
             {
                 this.boardValues[i,j]= boardValues[i,j];
             }
         }
+        Player01 = new DemoPlayer(board.Player01);
+        Player02 = new DemoPlayer(board.Player02);
+
+
     }
 
-    
-    public void performMove(int player, Position p)
+    public DemoPlayer GetDemoPlayer(int No)
     {
-        this.totalMoves++;//手数更新
-        boardValues[p.getX(),p.getY()]= player;
+        if(No == 1)
+        {
+            return Player01;
+        }
+        else
+        {
+            return Player02;
+        }
+    }
+
+    public void performMove(int player, Position p, int selectNum)
+    {
+
+        bool[] NumCards = GetDemoPlayer(player).NumCards;
+        totalMoves++;//手数更新
+        boardValues[p.getX(),p.getY()]= selectNum;
+        SelectX = p.getX(); SelectY = p.getY();
+        NumCards[selectNum - 1] = false;
+
     }
     
 
@@ -139,8 +181,8 @@ public class BoardManager : MonoBehaviour
     
     public int CheckStatus()
     {
-        int Judge;
-/*        if (getEmptyPositions().Count>0)
+       int Judge;
+       if (getEmptyPositions().Count>0)
         {
             Debug.Log("Game Status:" + getEmptyPositions().Count);
             return IN_PROGRESS;
@@ -149,10 +191,7 @@ public class BoardManager : MonoBehaviour
         {
             Judge = CalculationVic();
             return Judge;
-        }*/
-        Judge = CalculationVic();
-        Debug.Log("Judge:" + Judge);
-        return Judge;
+        }
     }
     //計算結果を出す
     private int CalculationVic()
@@ -347,7 +386,7 @@ public class BoardManager : MonoBehaviour
     //このボードの空いているマスを列挙
     public List<Position> getEmptyPositions()
     {
-        int size = this.boardValues.GetLength(0);
+        int size = boardValues.GetLength(0);
         List<Position> emptyPositions = new List<Position>();
         for (int i = 0; i < size; i++)
         {

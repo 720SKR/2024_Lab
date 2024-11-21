@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void GameInit()//Unitask入れまっせ
+    public async void GameInit()//Unitask入れまっせ
     {
         RetryButton.SetActive(false);
         ExitButton.SetActive(false);
@@ -109,10 +109,10 @@ public class GameManager : MonoBehaviour
         //Game = false;
         RandVsendUI = board.GetVictoryValue();
         RandomUI.RandomAnimetionS(RandVsendUI);//ランダム数値決定UIを動かす
-        
+        await UniTask.WaitUntil(() => RandomUI.isfinish == true);
         if (Randv == 0)
         {
-            playerNum = 0;//Player1が先行
+            playerNum = 1;//Player1が先行
             if (!isPlayer2)
             {
                 Player2.GetComponent<Player_1>().NotTurn();
@@ -124,8 +124,7 @@ public class GameManager : MonoBehaviour
         }
         if (Randv == 1)
         {
-            playerNum = 1;//Player2が先行
-
+            playerNum = 2;//Player2が先行
             Player1.GetComponent<Player>().NotTurn();
             if (!isPlayer2)
             {

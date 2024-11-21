@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 7688682}
   - component: {fileID: 7688684}
   - component: {fileID: 7688685}
+  - component: {fileID: 7688686}
   m_Layer: 5
   m_Name: PlayerKun2
   m_TagString: Untagged
@@ -299,6 +300,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 12f6c9396b0bf204e8e9c510489b909a, type: 3}
   - {fileID: 8300000, guid: 8352638a0942b5240be828b8ca740f66, type: 3}
   board: {fileID: 1567270389}
+  boardUI: {fileID: 0}
   cardAnimation: {fileID: 1567270394}
   GamePlayerNo: 1
 --- !u!114 &7688685
@@ -366,9 +368,24 @@ MonoBehaviour:
   playerColor: {fileID: 0}
   GM: {fileID: 1567270390}
   board: {fileID: 1567270389}
+  boardUI: {fileID: 1567270396}
   cardsAnimation: {fileID: 1567270394}
   SetSE: {fileID: 8300000, guid: 880e2aedc73c426439dc5f53d45ca706, type: 3}
   SendPlayer: {fileID: 632407199}
+--- !u!114 &7688686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7688680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f2d4e7f636f8594aa49c072c10cef9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 1567270390}
+  player1: {fileID: 632407203}
 --- !u!1 &39215696
 GameObject:
   m_ObjectHideFlags: 0
@@ -5440,6 +5457,7 @@ MonoBehaviour:
   isReload: 0
   isAI: 0
   isSet: 0
+  NumCards: 
   tg_v: 0
   pretg_v: 0
   R: 0
@@ -5447,6 +5465,7 @@ MonoBehaviour:
   V: 0
   BVG: 0
   board: {fileID: 1567270389}
+  boardUI: {fileID: 0}
   cardAnimation: {fileID: 1567270394}
   SetSE:
   - {fileID: 8300000, guid: 880e2aedc73c426439dc5f53d45ca706, type: 3}
@@ -13696,6 +13715,7 @@ GameObject:
   - component: {fileID: 1567270388}
   - component: {fileID: 1567270390}
   - component: {fileID: 1567270389}
+  - component: {fileID: 1567270396}
   - component: {fileID: 1567270391}
   - component: {fileID: 1567270394}
   - component: {fileID: 1567270393}
@@ -13856,6 +13876,7 @@ MonoBehaviour:
   RandV: 0
   tin: {fileID: 8300000, guid: 11b8dc98de940b94b96c3f4343d7aa03, type: 3}
   tw: {fileID: 8300000, guid: 9a2f7da895fc1224d806c4bbf4b58717, type: 3}
+  isfinish: 0
 --- !u!114 &1567270394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13935,6 +13956,55 @@ MonoBehaviour:
   OptionPanel: {fileID: 0}
   AudioClips: {fileID: 8300000, guid: 880e2aedc73c426439dc5f53d45ca706, type: 3}
   fadeSpeed: 0.5
+--- !u!114 &1567270396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567270386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf020ce894f20e478f6f7e4192fe147, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SelectMass_Text:
+  - {fileID: 500964081}
+  - {fileID: 109160731}
+  - {fileID: 930351431}
+  - {fileID: 1553710503}
+  - {fileID: 2016181574}
+  - {fileID: 39215699}
+  - {fileID: 408845131}
+  - {fileID: 837991473}
+  - {fileID: 268349385}
+  - {fileID: 748077198}
+  - {fileID: 539042975}
+  - {fileID: 586389562}
+  - {fileID: 96784897}
+  - {fileID: 610601947}
+  - {fileID: 575934608}
+  - {fileID: 1264425387}
+  SelectMass_Image:
+  - {fileID: 204773855}
+  - {fileID: 2050849553}
+  - {fileID: 305686466}
+  - {fileID: 621803910}
+  - {fileID: 799746697}
+  - {fileID: 2100472829}
+  - {fileID: 739467905}
+  - {fileID: 2062424096}
+  - {fileID: 1806118289}
+  - {fileID: 2123758764}
+  - {fileID: 878468852}
+  - {fileID: 1469630471}
+  - {fileID: 1231788448}
+  - {fileID: 708581350}
+  - {fileID: 825902017}
+  - {fileID: 327269781}
+  Player_Material:
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1574731140
 GameObject:
   m_ObjectHideFlags: 0

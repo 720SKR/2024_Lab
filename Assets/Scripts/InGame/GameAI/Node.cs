@@ -8,9 +8,9 @@ public class Node
     Node parent;//e
     List<Node> childArray;
 
-    public Node()
+    public Node(DemoPlayer p1,DemoPlayer p2)
     {
-        this.state = new State();
+        state = new State(p1,p2);
         childArray = new List<Node>();
     }
 
@@ -31,10 +31,10 @@ public class Node
     public Node(Node node)
     {
         this.childArray = new List<Node>();
-        this.state = new State(node.getState());
+        state = new State(node.getState());
         if(node.getParent() != null)
         {
-            this.parent = node.getParent();
+            parent = node.getParent();
         }
         List<Node> childArray = node.getChildArray();
         foreach(Node child in childArray)
@@ -94,11 +94,6 @@ public class Node
             }
         }
         return Max;
-        /*
-        return  childArray.Max(this.childArray, Comparer.(c-> {
-            return c.getState().getVisitCount();//Å‘½–K–â”BÅ‚•½‹Ï•ñV‚ğg‚¤
-        }));
-        */
     }
     
 }

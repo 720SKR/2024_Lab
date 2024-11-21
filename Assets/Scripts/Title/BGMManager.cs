@@ -122,6 +122,7 @@ public class BGMManager : MonoBehaviour
 
     public void OpenUserSetting()
     {
+        Debug.Log("OpenSetting");
         SetTestPlayIcon(BGMSelectNo);
         Title.Stop();
     }

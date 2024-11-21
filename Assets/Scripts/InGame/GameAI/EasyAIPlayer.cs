@@ -22,6 +22,7 @@ public class EasyAIPlayer : MonoBehaviour
     [Header("Manager")]
     [SerializeField] GameManager GM;
     [SerializeField] BoardManager board;
+    [SerializeField] BoardUIManager boardUI;
     [SerializeField] CardsAnimation cardsAnimation;
     [SerializeField] AudioClip SetSE;
     [SerializeField] GameObject SendPlayer;
@@ -83,10 +84,11 @@ public class EasyAIPlayer : MonoBehaviour
 
     void SearchEmpty()
     {
-        Debug.Log("Search");
+        //Debug.Log("Search");
         SelectedNUMBoard = 0;
         CurrentBoard = board.GetBoardValues();
-        Debug.Log("Length:"+CurrentBoard.Length);
+        Debug.Log(CurrentBoard);
+        //Debug.Log("Length:"+CurrentBoard.Length);
         for(int i = 0; i < SelectedBoard.Length; i++)
         {
             SelectedBoard[i] = board.GetboardV(i);
@@ -130,8 +132,7 @@ public class EasyAIPlayer : MonoBehaviour
     {
         GameObject.Find("SEManager").GetComponent<AudioSource>().PlayOneShot(SetSE);
         JustMass_Value[SelectedNUMBoard] = SelectedNUM;
-        JustMass_Text[SelectedNUMBoard].text = JustMass_Value[SelectedNUMBoard].ToString();
-        JustMass_Image[SelectedNUMBoard].material = playerColor;
+        boardUI.SetMassBoard(JustMass_Value[SelectedNUMBoard],SelectedNUMBoard,1);
         Debug.Log("Value:"+JustMass_Value[SelectedNUMBoard]);
     //    Debug.Log(SelectedNUM + "1 :" + (SelectedNUM+1));
         NumButton[SelectedNUM].SetActive(false);

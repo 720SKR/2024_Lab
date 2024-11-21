@@ -9,7 +9,7 @@ public class MonteCarloTreeSearch
     private static int WIN_SCORE = 10;//”ƒ‚Á‚½Û‚Ì•ñV
     private int level;//1è‚ğŒvZ‚·‚é‚½‚ß‚Ì§ŒÀŠÔ
     private int opponent;//AI‚Ì“G‚ğ‹L‰¯
-
+    private Node BestNode;
     public MonteCarloTreeSearch(int Level)
     {
         this.level = Level;//’l‚Í“K‹X•ÏX‚·‚éiƒŒƒxƒ‹İ’è‚·‚é‚½‚ßj
@@ -31,14 +31,14 @@ public class MonteCarloTreeSearch
     }
 
 
-    public BoardManager findNextMove(BoardManager board,int playerNo)
+    public BoardManager findNextMove(BoardManager board,int playerNo,DemoPlayer p1,DemoPlayer p2)
     {
         long start = DateTime.Now.Ticks;
         long end = start + 60 *GetMillisForCurrentLevel();
 
         opponent = 3 - playerNo;
 
-        TreeScript tree = new TreeScript();//‹ó‚Ì’Tõ–Ø‚ğì‚é
+        TreeScript tree = new TreeScript(p1, p2);//‹ó‚Ì’Tõ–Ø‚ğì‚é
         Node rootNode = tree.getRoot();
         rootNode.getState().setBoard(board);
 
@@ -67,12 +67,18 @@ public class MonteCarloTreeSearch
         }
 
         Node WinnerNode = rootNode.getChildWithMaxScore();
+        BestNode = WinnerNode;
         tree.setRoot(WinnerNode);
         return WinnerNode.getState().getBoard();
 
     }
 
-    
+    public BoardManager GetBestMove()
+    {
+        return BestNode.getState().getBoard();
+    }
+
+
     private Node selectPromisingNode(Node rootNode)
     {
         Node node = rootNode;

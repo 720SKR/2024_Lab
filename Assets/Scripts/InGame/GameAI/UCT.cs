@@ -8,7 +8,7 @@ public class UCT
         {
             return int.MaxValue;
         }
-        return (nodeWinScore / (double)nodeVisit) + Math.Sqrt(2) * Math.Sqrt(Math.Log(totalVisit) / (double)nodeVisit);
+        return (nodeWinScore / nodeVisit) + Math.Sqrt(2) * Math.Sqrt(Math.Log(totalVisit) / nodeVisit);
     }
 
     
@@ -30,8 +30,5 @@ public class UCT
             }
         }
         return MaxNode;
-        /*return Enumerable.Max(.ToList() .node.getChildArray().
-            OrderByDescending(c => uctValue(parentVisit, c.getState().getWinScore(), c.getState().getVisitCount()))
-            .First());*/
     }
 }

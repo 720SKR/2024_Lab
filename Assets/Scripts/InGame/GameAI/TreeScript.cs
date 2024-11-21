@@ -1,9 +1,9 @@
 public class TreeScript
 {
     Node root;
-    public TreeScript()
+    public TreeScript(DemoPlayer p1, DemoPlayer p2)
     {
-        root = new Node();
+        root = new Node(p1,p2);
     }
 
     public TreeScript(Node root)
