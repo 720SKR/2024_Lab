@@ -1,19 +1,16 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using UnityEngine;
 
-public class Node : MonoBehaviour
+public class Node
 {
     State state;
     Node parent;//親
     List<Node> childArray;
 
-    public Node()
+    public Node(DemoPlayer p1,DemoPlayer p2)
     {
-        this.state = new State();
+        state = new State(p1,p2);
         childArray = new List<Node>();
     }
 
@@ -34,10 +31,10 @@ public class Node : MonoBehaviour
     public Node(Node node)
     {
         this.childArray = new List<Node>();
-        this.state = new State(node.getState());
+        state = new State(node.getState());
         if(node.getParent() != null)
         {
-            this.parent = node.getParent();
+            parent = node.getParent();
         }
         List<Node> childArray = node.getChildArray();
         foreach(Node child in childArray)
@@ -76,21 +73,27 @@ public class Node : MonoBehaviour
     {
         this.childArray = childArray;
     }
-    /*
+    //子ノードからランダムに1人選択する
     public Node getRandomChildNode()
     {
-        int noOfPossibleMoves = this.childArray.size();
-        int selectRandom = (int)(Random. * noOfPossibleMoves);
+        int noOfPossibleMoves = childArray.Count;
+        int selectRandom = Random.Range(0, noOfPossibleMoves);
 
-        return this.childArray.get(selectRandom);
+        return childArray[selectRandom];
     }
-    */
-    /*
+    
+    //最多訪問数の子ノードを求める
     public Node getChildWithMaxScore()
     {
-        return  childArray.max(this.childArray, Comparator.comparing(c-> {
-            return c.getState().getVisitCount();//最多訪問数。最高平均報酬を使う
-        }));
+        Node Max = childArray[0];
+        for(int i = 0; i<childArray.Count; i++)
+        {
+            if (childArray[i].getState().getVisitCount() > Max.getState().getVisitCount())
+            {
+                Max = childArray[i];
+            }
+        }
+        return Max;
     }
-    */
+    
 }

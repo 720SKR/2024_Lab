@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Cards1;
     [SerializeField] GameObject Cards2;
     [SerializeField] GameObject[] PlayerList;//2人のPlayer格納するための配列
-
+    [SerializeField] GameObject SetButton;
     [SerializeField] GameObject RetryButton;
     [SerializeField] GameObject ExitButton;
     //[SerializeField] BGMManager bgm;
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
             //bgm.GameSetBGM_AllStop();
             GameObject.Find("AudioManager").GetComponent<BGMManager>().GameSetBGM_AllStop();
             Player1.GetComponent<Player>().NotTurn();
-            if (!isPlayer2)
+            if (isPlayer2)
             {
                 AIPlayer.GetComponent<EasyAIPlayer>().enabled = false;
             }
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
             Cards2.SetActive(false);
             GameSetPanel.SetActive(true);
             GameUIM.GameUIMove();
-            
+            SetButton.SetActive(false);
             board.PrintCalculation();
             //board.printStatus();
             Game = true;
@@ -81,19 +81,19 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void GameInit()//Unitask入れまっせ
+    public async void GameInit()//Unitask入れまっせ
     {
         RetryButton.SetActive(false);
         ExitButton.SetActive(false);
         GameSetPanel.SetActive(false);
         isPlayer2 = UIManager.GetisPlayer();
-        if (!isPlayer2)
+        if (isPlayer2)
         {
             //コンピュータ用のPlayerスクリプトを起動
             Player2.GetComponent<Player_1>().enabled = false;
             AIPlayer.GetComponent<EasyAIPlayer>().enabled = true;
         }
-        if (isPlayer2)
+        if (!isPlayer2)
         {
             //Player用のスクリプトを起動する
             AIPlayer.GetComponent<EasyAIPlayer>().enabled = false;
@@ -109,11 +109,11 @@ public class GameManager : MonoBehaviour
         //Game = false;
         RandVsendUI = board.GetVictoryValue();
         RandomUI.RandomAnimetionS(RandVsendUI);//ランダム数値決定UIを動かす
-        
+        await UniTask.WaitUntil(() => RandomUI.isfinish == true);
         if (Randv == 0)
         {
-            playerNum = 0;//Player1が先行
-            if (isPlayer2)
+            playerNum = 1;//Player1が先行
+            if (!isPlayer2)
             {
                 Player2.GetComponent<Player_1>().NotTurn();
             }
@@ -124,10 +124,9 @@ public class GameManager : MonoBehaviour
         }
         if (Randv == 1)
         {
-            playerNum = 1;//Player2が先行
-
+            playerNum = 2;//Player2が先行
             Player1.GetComponent<Player>().NotTurn();
-            if (isPlayer2)
+            if (!isPlayer2)
             {
                 Player2.GetComponent<Player_1>().Turn();
             }
@@ -147,7 +146,7 @@ public class GameManager : MonoBehaviour
             //Debug.Log("Player1");
             TurnText.text = "Player 1 Turn";
         }
-        if (Player2.GetComponent<Player_1>().GetPlayerTurn())
+        if (Player2.GetComponent<Player_1>().GetPlayerTurn() || AIPlayer.GetComponent<EasyAIPlayer>().GetPlayerTurn())
         {
             //Debug.Log("Player2");
             TurnText.text = "Player 2 Turn";

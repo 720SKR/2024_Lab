@@ -38,6 +38,7 @@ public class Player_1 : MonoBehaviour
     [SerializeField] int R,C,V,BVG;
     [SerializeField] AudioClip[] SetSE;
     [SerializeField] BoardManager board;
+    [SerializeField] BoardUIManager boardUI;
     [SerializeField] CardsAnimation cardAnimation;
     [Header("Player番号確認")]
     [SerializeField] int GamePlayerNo; //インスペクター上で固定するNo
@@ -96,13 +97,10 @@ public class Player_1 : MonoBehaviour
             JustMass_t[i].text = string.Empty;
         }
         tg_v = 0;
-        V = 1; R = 0; C = 0;
+        V = 0; R = -1; C = -1;
         SelectMass_t[tg_v].text = V.ToString();
         SelectCurrentNum.text = V.ToString();
         isInit = true;
-        ///sammary///
-        ///Player選択画面で変更したカラーを取得、Playerカラーをそれに。
-        ///sammary///
     }
 
     public void Turn()
@@ -110,6 +108,7 @@ public class Player_1 : MonoBehaviour
         //Debug.Log("Turn next");
         Panel1.material = playerColor_1;
         Panel2.material = playerColor_1;
+        R = -1; C = -1;
         MyTurn = true;
     }
 
@@ -143,15 +142,7 @@ public class Player_1 : MonoBehaviour
                 SelectCurrentNum.text = V.ToString();
                 break;//最低値を初期選択にする。
             }
-        }/*
-        for(int i= 0;i<16;i++)//空白のマスを検索
-        {
-            if (JustMass_t[i].text == "")//最初に空白があればそこに値を挿入 
-            {
-                SelectMass_t[i].text = V.ToString();
-                break;
-            }
-        }*/
+        }
     }
 
     public void ValueSetteing(int Num)
@@ -202,9 +193,10 @@ public class Player_1 : MonoBehaviour
             if (JustMass_t[tg_v].text == (V != 0).ToString()) return;//既に確定マスに０以外入っている。
             GameObject.Find("SEManager").GetComponent<AudioSource>().PlayOneShot(SetSE[0]);
             SelectMass_t[tg_v].text = "";
-            JustMass_i[tg_v].material = playerColor_1;
-            JustMass_t[tg_v].text = V.ToString();
+            //JustMass_i[tg_v].material = playerColor_1;
+            //JustMass_t[tg_v].text = V.ToString();
             JustMass_v[tg_v] = V;
+            boardUI.SetMassBoard(V, tg_v, 0);
             SetNumButton[V - 1].SetActive(false);
             //Debug.Log("Set");
             sr = R;

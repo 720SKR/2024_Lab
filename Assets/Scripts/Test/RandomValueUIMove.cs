@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ public class RandomValueUIMove : MonoBehaviour
     [SerializeField] int RandV;
     [SerializeField] AudioClip tin;
     [SerializeField] AudioClip tw;
+    public bool isfinish;//Animation終わったかどうか
     //AudioSource ass;
     int RandAnimUI;
     int test;
@@ -36,11 +38,12 @@ public class RandomValueUIMove : MonoBehaviour
 
     public void RandomAnimetionS(int V)//目標値設定 boardManagerから目標値を受け取って始動する。
     {
+        isfinish = false;
         VictoryValue = V;
-        StartCoroutine(RandAnimation());
+        RandAnimation();
     }
 
-    IEnumerator RandAnimation()
+    public async void RandAnimation()
     {
         RandV = GameObject.Find("GameSystem").GetComponent<GameManager>().GetRandV();
         switch (RandV)
@@ -52,30 +55,29 @@ public class RandomValueUIMove : MonoBehaviour
                 FirstOrSecond.material = UIManager.SetM_P2();
                 break;
         }
-        //Debug;
-        //RandV = Random.Range(0, 2);
         FirstOrSecond.text = null;
         var seq = DOTween.Sequence();
         seq.Append(FadePanel.DOFade(1f, 1f).SetEase(Ease.OutSine))
            .Join(RandmaizerUI.DOAnchorPos(new Vector2(0,0),0.5f).SetEase(Ease.OutBack));
-        yield return new WaitForSeconds(1);
+        await UniTask.WaitForSeconds(1);
         for (int i= 0; i < Interval; i++)
         {
             //ass.PlayOneShot(tin);
             GameObject.Find("SEManager").GetComponent<AudioSource>().PlayOneShot(tin);
             ValueText.text = Random.Range(10, 35).ToString();
-            yield return new WaitForSeconds(0.01f + Speed);
+            await UniTask.WaitForSeconds(0.01f+Speed);
             Speed += 0.02f;
         }
-        yield return new WaitForSeconds(1);
+        await UniTask.WaitForSeconds(1);
         GameObject.Find("SEManager").GetComponent<AudioSource>().PlayOneShot(tw);
         ValueText.text = VictoryValue.ToString();
         FirstOrSecond.text = "First Player : " + (RandV+1).ToString();
-        yield return new WaitForSeconds(2);
+        await UniTask.WaitForSeconds(2);
         seq.Append(RandmaizerUI.DOAnchorPos(new Vector2(-1000, 0), 0.5f).SetEase(Ease.InBack))
            .Join(FadePanel.DOFade(0f, 1f).SetEase(Ease.InSine));
         seq.Kill();
-        yield return new WaitForSeconds(2);
+        await UniTask.WaitForSeconds(2);
         FadePanel.enabled = false;
+        isfinish = true;
     }
 }

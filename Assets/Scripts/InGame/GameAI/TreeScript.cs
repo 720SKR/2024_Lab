@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class TreeScript : MonoBehaviour
+public class TreeScript
 {
     Node root;
-    public TreeScript()
+    public TreeScript(DemoPlayer p1, DemoPlayer p2)
     {
-        root = new Node();
+        root = new Node(p1,p2);
     }
 
     public TreeScript(Node root)
@@ -27,6 +23,6 @@ public class TreeScript : MonoBehaviour
 
     public void addChild(Node parent,Node child)
     {
-//        parent.getChildArray().add(child);
+        parent.getChildArray().Add(child);
     }
 }

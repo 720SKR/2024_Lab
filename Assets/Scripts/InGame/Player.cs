@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     bool isInit;
     [SerializeField]bool isAI;
     [SerializeField] bool isSet;
+    public bool[] NumCards;
     int sr, sc, sv;
     int sv_in;//1次元配列に格納用値
     [Header("ゲーム運営に必要なオブジェクト")]
@@ -38,6 +39,7 @@ public class Player : MonoBehaviour
     [SerializeField] int pretg_v;
     [SerializeField] int R,C,V,BVG;
     [SerializeField] BoardManager board;
+    [SerializeField] BoardUIManager boardUI;
     [SerializeField] CardsAnimation cardAnimation;
     [SerializeField] AudioClip[] SetSE;
     [Header("Player番号確認")]
@@ -103,19 +105,17 @@ public class Player : MonoBehaviour
             JustMass_t[i].text = string.Empty;
         }
         tg_v = 0;
-        V = 1; R = 0; C = 0;
+        V = 0; R = -1; C = -1;
         SelectMass_t[tg_v].text = V.ToString();
         SelectCurrentNum.text = V.ToString();
         isInit = true;
-        ///sammary///
-        ///Player選択画面で変更したカラーを取得、Playerカラーをそれに。
-        ///sammary///
     }
 
     public void Turn()
     {
         Panel1.material = playerColor_1;
         Panel2.material = playerColor_1;
+        R = -1;C = -1;
         MyTurn = true;
     }
 
@@ -196,13 +196,14 @@ public class Player : MonoBehaviour
     {
         if (MyTurn)
         {
-            if (V == 0) return;//値が入ってない or 場所を指定してない
+            if (R == -1 || C== -1) return;//値が入ってない or 場所を指定してない
             if (JustMass_t[tg_v].text == (V != 0).ToString()) return;//既に確定マスに０以外入っている。
             GameObject.Find("SEManager").GetComponent<AudioSource>().PlayOneShot(SetSE[0]);
             SelectMass_t[tg_v].text = "";
-            JustMass_i[tg_v].material = playerColor_1;
-            JustMass_t[tg_v].text = V.ToString();
+            //JustMass_i[tg_v].material = playerColor_1;
+            //JustMass_t[tg_v].text = V.ToString();
             JustMass_v[tg_v] = V;
+            boardUI.SetMassBoard(V,tg_v,0);
             SetNumButton[V - 1].SetActive(false);
             //Debug.Log("Set");
             sr = R;
@@ -223,6 +224,11 @@ public class Player : MonoBehaviour
     public bool GetisSelect()
     {
         return isSelect;
+    }
+
+    public bool[] GetNumCards()
+    {
+        return NumCards;
     }
 
 }
