@@ -10,12 +10,14 @@ public class AIPlayerM : MonoBehaviour
     [SerializeField] Image[] SettingPanel;
     [SerializeField] Text[] SelectMass_Text;
     [SerializeField] Image[] SelectMass_Image;
+    [SerializeField] GameObject SendPlayer;
     Material playerMaterial;
     int Level;
     int row;
     int col;
     int value;
     int playerNo;
+    bool MyTurn;
     MonteCarloTreeSearch M_AIplayer;
     BoardManager board;
     State state;
@@ -28,7 +30,6 @@ public class AIPlayerM : MonoBehaviour
         //Level UIÇ©ÇÁéÊìæÇ∑ÇÈ
         playerMaterial = UIManager.SetM_P2();
         Level = UIManager.GetLevel();
-        M_AIplayer.SetLevel(Level);
         playerNo = manager.GetPlayerNo();
         M_AIplayer = new MonteCarloTreeSearch(Level);
         switch (playerNo)
@@ -47,15 +48,27 @@ public class AIPlayerM : MonoBehaviour
 
     public void Turn()
     {
+        MyTurn = true;
         SettingPanel[0].material = playerMaterial;
         SettingPanel[1].material = playerMaterial;
         board = M_AIplayer.findNextMove(board,playerNo,p1,p2);
-        //row = M_AIplayer.GetBestMove();
+        var Get = M_AIplayer.GetBestMove().GetBestPossV();
+        row = Get.Item1;
+        col = Get.Item2;
+        value = Get.Item3;
+        int board1d = row * 4 + col;
+        SelectMass_Image[board1d].material = playerMaterial;
+        SelectMass_Text[board1d].text = value.ToString();
         //UIÇÃèàóù
         Debug.Log(board);
-
+        SendPlayer.GetComponent<Player>().Turn();
+        MyTurn = false;
     }
 
+    public bool GetMyturn()
+    {
+        return MyTurn;
+    }
 
 
     

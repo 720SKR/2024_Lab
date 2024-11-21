@@ -386,6 +386,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   manager: {fileID: 1567270390}
   player1: {fileID: 632407203}
+  SettingPanel:
+  - {fileID: 79074684}
+  - {fileID: 1130700241}
+  SelectMass_Text:
+  - {fileID: 500964081}
+  - {fileID: 109160731}
+  - {fileID: 930351431}
+  - {fileID: 1553710503}
+  - {fileID: 2016181574}
+  - {fileID: 39215699}
+  - {fileID: 408845131}
+  - {fileID: 837991473}
+  - {fileID: 268349385}
+  - {fileID: 748077198}
+  - {fileID: 539042975}
+  - {fileID: 586389562}
+  - {fileID: 96784897}
+  - {fileID: 610601947}
+  - {fileID: 575934608}
+  - {fileID: 1264425387}
+  SelectMass_Image:
+  - {fileID: 204773855}
+  - {fileID: 2050849553}
+  - {fileID: 305686466}
+  - {fileID: 621803910}
+  - {fileID: 799746697}
+  - {fileID: 2100472829}
+  - {fileID: 739467905}
+  - {fileID: 2062424096}
+  - {fileID: 1806118289}
+  - {fileID: 2123758764}
+  - {fileID: 878468852}
+  - {fileID: 1469630471}
+  - {fileID: 1231788448}
+  - {fileID: 708581350}
+  - {fileID: 825902017}
+  - {fileID: 327269781}
+  SendPlayer: {fileID: 632407199}
 --- !u!1 &39215696
 GameObject:
   m_ObjectHideFlags: 0

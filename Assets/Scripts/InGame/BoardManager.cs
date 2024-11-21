@@ -48,7 +48,7 @@ public class BoardManager : MonoBehaviour
     bool GameSet;
 
     int P1Count, P2Count, P1AbsCount, P2AbsCount;
-    int SelectX,SelectY;
+    int SelectX,SelectY,SelectV;
     Material winner;
     public DemoPlayer Player01;
     public DemoPlayer Player02;
@@ -164,6 +164,7 @@ public class BoardManager : MonoBehaviour
         totalMoves++;//手数更新
         boardValues[p.getX(),p.getY()]= selectNum;
         SelectX = p.getX(); SelectY = p.getY();
+        SelectV = selectNum;
         NumCards[selectNum - 1] = false;
 
     }
@@ -404,6 +405,11 @@ public class BoardManager : MonoBehaviour
     public int GetValue(int r,int c)
     {
         return boardValues[r,c];
+    }
+
+    public (int, int, int) GetBestPossV()
+    {
+        return (SelectX, SelectY, SelectV);//選択された行、列、値を取得
     }
 
     public void SetValue(int r,int c,int v,int bvg)//列、行、値、1次元用
